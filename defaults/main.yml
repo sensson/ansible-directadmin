@@ -1,0 +1,5 @@
+---
+# defaults file for sensson.directadmin
+client_id: "0"
+license_id: "0"
+interface: "eth0"

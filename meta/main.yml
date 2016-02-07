@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Sensson
+  description: An Ansible role to install DirectAdmin
+  company: Sensson
+  # issue_tracker_url: http://example.com/issue/tracker
+  license: GPLv3
+  min_ansible_version: 2.0
+  platforms:
+  - name: EL
+    versions:
+    - 6
+    - 7
+  galaxy_tags:
+    - DirectAdmin
+dependencies: []

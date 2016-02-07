@@ -1,0 +1,74 @@
+# DirectAdmin installation
+- fail: msg=Setting {{ item }} is not defined
+  when: item not in hostvars[inventory_hostname]
+  with_items:
+  - client_id
+  - license_id
+
+- name: "Check installation"
+  stat: path=/usr/local/directadmin/conf/directadmin.conf
+  register: directadmin
+
+- name: "CentOS | install prerequisites"
+  yum: state=present name={{ item }}
+  with_items:
+  - wget
+  - gcc
+  - gcc-c++
+  - flex
+  - bison
+  - make
+  - perl-ExtUtils-MakeMaker
+  - perl-Digest-SHA
+  - perl-Net-DNS
+  - perl-NetAddr-IP
+  - perl-Archive-Tar
+  - perl-IO-Zlib
+  - perl-Mail-SPF
+  - perl-IO-Socket-INET6
+  - perl-IO-Socket-SSL
+  - perl-Mail-DKIM
+  - perl-DBI
+  - perl-Encode-Detect
+  - perl-HTML-Parser
+  - perl-HTML-Tagset
+  - perl-Time-HiRes
+  - perl-libwww-perl
+  - perl-ExtUtils-Embed
+  when: "ansible_os_family == 'RedHat'"
+
+- name: "CentOS 7 | install additional prerequisites"
+  yum: state=present name={{ item }}
+  with_items:
+  - perl-Sys-Syslog
+  when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'"
+
+- name: "Set up prerequisites file"
+  copy:
+    content: 1
+    dest: /root/.preinstall
+    force: no
+    group: root
+    owner: root
+    mode: 644
+
+- name: "Download installer"
+  get_url:
+    url: http://www.directadmin.com/setup.sh
+    dest: /root/setup.sh
+
+- name: "Set installer permissions"
+  file:
+    path: /root/setup.sh
+    mode: 755
+
+- name: "Set up custombuild version"
+  copy:
+    content: "2.0"
+    dest: /root/.custombuild
+    force: no
+    mode: 644
+
+- name: "Install DirectAdmin"
+  command: /root/setup.sh {{ client_id }} {{ license_id }} {{ inventory_hostname }} {{ interface }}
+  when: directadmin.stat.exists == False
