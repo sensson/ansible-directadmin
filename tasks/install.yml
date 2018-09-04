@@ -18,6 +18,7 @@
   - flex
   - bison
   - make
+  - openssl-devel
   - perl-ExtUtils-MakeMaker
   - perl-Digest-SHA
   - perl-Net-DNS
