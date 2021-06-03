@@ -1,3 +1,2 @@
 ---
-# tasks file for sensson.directadmin
 - include: install.yml
