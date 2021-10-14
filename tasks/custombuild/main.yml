@@ -1,0 +1,35 @@
+# This file is included in the install.yml, this makes
+# sure that we have the correct configurations when
+# installing this server.
+---
+- name: DirectAdmin | Set CustomBuild Version
+  copy:
+    content: "2.0"
+    dest: /root/.custombuild
+    force: no
+    mode: 644
+
+- name: DirectAdmin | Download CustomBuild
+  shell:
+    cmd: "rm -rf custombuild* && wget --no-check-certificate -O custombuild.tar.gz {{ custombuild_installer_url }} && tar xvzf custombuild.tar.gz"
+    chdir: /usr/local/directadmin
+    creates: /usr/local/directadmin/custombuild/options.conf
+    warn: false
+
+# This is more resilient, but a lot slower to run. Undecided if this should be changed.
+# Reporting changes has been disabled as build set always returns 0.
+- name: DirectAdmin | Configure CustomBuild
+  command:
+    cmd: /usr/local/directadmin/custombuild/build set {{ item.key }} {{ item.value }}
+  with_dict: "{{ directadmin_custombuild_options|default({}) }}"
+  register: configure_custombuild
+  changed_when: '"Changed" in configure_custombuild.stdout'
+
+- name: DirectAdmin | Create CustomBuild Custom Directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+    mode: 755
+  with_items:
+    - /usr/local/directadmin/custombuild/custom

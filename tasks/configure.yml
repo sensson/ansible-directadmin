@@ -1,0 +1,10 @@
+---
+- name: DirectAdmin | Configure DirectAdmin
+  lineinfile:
+    path: /usr/local/directadmin/conf/directadmin.conf
+    regexp: "^{{ item.key }}="
+    line: "{{ item.key }}={{ item.value }}"
+  with_dict: "{{ directadmin_configuration|default({}) }}"
+  register: configure_directadmin
+  notify:
+   - restart directadmin

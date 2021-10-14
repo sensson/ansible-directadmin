@@ -1,0 +1,9 @@
+---
+- name: DirectAdmin | Configure PHP extensions
+  lineinfile:
+    path: /usr/local/directadmin/custombuild/php_extensions.conf
+    regexp: "^{{ item.key }}="
+    line: "{{ item.key }}={{ item.value }}"
+  with_dict: "{{ directadmin_php_extensions|default({}) }}"
+  notify:
+   - rebuild php extensions

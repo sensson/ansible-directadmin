@@ -1,2 +1,27 @@
 ---
-# handlers file for sensson.directadmin
+- name: restart exim
+  service: name=exim state=restarted
+  listen: restart exim
+
+- name: restart dovecot
+  service: name=dovecot state=restarted
+  listen: restart dovecot
+
+- name: restart httpd
+  service: name=httpd state=restarted
+  listen: restart httpd
+
+- name: restart directadmin
+  service: name=directadmin state=restarted
+  listen: restart directadmin
+
+- name: restart named
+  service: name=named state=restarted
+  listen: restart named
+
+- name: restart mysqld
+  service: name=mysqld state=restarted
+  listen: restart mysqld
+
+- name: rebuild php extensions
+  shell: /usr/local/directadmin/custombuild/build php_extensions
