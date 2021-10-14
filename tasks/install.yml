@@ -1,10 +1,4 @@
 ---
-- fail: msg=Setting {{ item }} is not defined
-  when: item not in hostvars[inventory_hostname]
-  with_items:
-  - client_id
-  - license_id
-
 - name: DirectAdmin | Create directories
   file:
     path: "{{ item }}"
@@ -42,11 +36,12 @@
     mode: 755
 
 - name: DirectAdmin | Include CustomBuild
-  include_tasks: custombuild.yml
+  include_tasks: custombuild/main.yml
 
 - name: DirectAdmin | Time for a cup of coffee
   debug:
     msg: Installation is about to begin. Time for a cup of coffee.
+  when: directadmin.stat.exists == False
 
 - name: DirectAdmin | Install DirectAdmin
   command: /root/setup.sh {{ client_id }} {{ license_id }} {{ inventory_hostname }} {{ interface }}

@@ -1,8 +1,7 @@
 ---
-# defaults file for sensson.directadmin
-client_id: "0"
-license_id: "0"
-interface: "eth0"
+client_id: 0
+license_id: 0
+interface: eth0
 
 setup_url: "http://www.directadmin.com/setup.sh"
 custombuild_installer_url: "http://files.directadmin.com/services/custombuild/2.0/custombuild.tar.gz"

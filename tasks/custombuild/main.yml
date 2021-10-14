@@ -1,3 +1,6 @@
+# This file is included in the install.yml, this makes
+# sure that we have the correct configurations when
+# installing this server.
 ---
 - name: DirectAdmin | Set CustomBuild Version
   copy:
@@ -7,8 +10,8 @@
     mode: 644
 
 - name: DirectAdmin | Download CustomBuild
-  command:
-    cmd: rm -rf custombuild* && wget --no-check-certificate -O custombuild.tar.gz {{ custombuild_installer_url }} && tar xvzf custombuild.tar.gz
+  shell:
+    cmd: "rm -rf custombuild* && wget --no-check-certificate -O custombuild.tar.gz {{ custombuild_installer_url }} && tar xvzf custombuild.tar.gz"
     chdir: /usr/local/directadmin
     creates: /usr/local/directadmin/custombuild/options.conf
     warn: false
@@ -19,7 +22,8 @@
   command:
     cmd: /usr/local/directadmin/custombuild/build set {{ item.key }} {{ item.value }}
   with_dict: "{{ directadmin_custombuild_options|default({}) }}"
-  changed_when: false
+  register: configure_custombuild
+  changed_when: '"Changed" in configure_custombuild.stdout'
 
 - name: DirectAdmin | Create CustomBuild Custom Directory
   file:

@@ -18,6 +18,9 @@ Role Variables
 * `client_id`: The DirectAdmin client id.
 * `license_id`: The DirectAdmin license id.
 * `interface`: The server's interface. Default: eth0.
+* `directadmin_configuration`: All DirectAdmin configurations
+* `directadmin_custombuild_options`: All CustomBuild options.
+* `directadmin_phpextensions`: All PHP extensions.
 
 Dependencies
 ------------
@@ -27,19 +30,19 @@ None.
 Example Playbook
 ----------------
 
-```
+```yaml
 - hosts: directadmin
   roles:
-    - sensson.directadmin      
+    - sensson.directadmin
 ```
 
 We recommend using host variables to set your client and license id. For
 example:
 
-```
+```yaml
 [directadmin]
 server.fqdn.com client_id=1000 license_id=10000
-``` 
+```
 
 License
 -------
@@ -50,5 +53,5 @@ Author Information
 ------------------
 
 Sensson is a hosting company. We try to share our work whenever possible. We
-do not intend to offer commercial support on our open source modules. We do 
+do not intend to offer commercial support on our open source modules. We do
 welcome all pull requests though and will attempt to help whenever possible.
