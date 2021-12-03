@@ -1,0 +1,32 @@
+---
+- name: Get DirectAdmin Authentication URL
+  command: "/usr/local/directadmin/directadmin --root-auth-url"
+  register: directadmin_access
+  no_log: true
+  changed_when: false
+
+- name: Check if users exist
+  uri:
+    url: "{{ directadmin_access.stdout }}/CMD_API_USER_EXISTS?json=yes&user={{ item.username }}"
+    validate_certs: no
+    force_basic_auth: yes
+  register: directadmin_checkusers
+  with_items: "{{ directadmin_admins }}"
+  no_log: true
+
+- name: Create admin users
+  uri:
+    url: "{{ directadmin_access.stdout }}/CMD_API_ACCOUNT_ADMIN?json=yes&action=create&add=Submit&username={{ item.item.username}}&email={{ item.item.email }}&passwd={{ item.item.passwd }}&passwd2={{ item.item.passwd }}&notify={{ item.item.notify}}"
+    validate_certs: no
+    force_basic_auth: yes
+    method: POST
+  with_items: "{{ directadmin_checkusers.results }}"
+  when: item.json.exists == '0'
+  no_log: true
+
+- name: Change password if needed
+  user:
+    name: "{{ item.username }}"
+    password: "{{ item.passwd | password_hash('sha512') }}"
+  with_items: "{{ directadmin_admins }}"
+  no_log: true

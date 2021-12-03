@@ -8,3 +8,4 @@
 - include: install.yml
 - include: configure.yml
 - include: custombuild/phpextensions.yml
+- include: resources/administrators.yml
