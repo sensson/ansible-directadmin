@@ -5,29 +5,3 @@ interface: eth0
 
 setup_url: "http://www.directadmin.com/setup.sh"
 custombuild_installer_url: "http://files.directadmin.com/services/custombuild/2.0/custombuild.tar.gz"
-
-centos_packages:
-  - wget
-  - gcc
-  - gcc-c++
-  - flex
-  - bison
-  - make
-  - openssl-devel
-  - perl-ExtUtils-MakeMaker
-  - perl-Digest-SHA
-  - perl-Net-DNS
-  - perl-NetAddr-IP
-  - perl-Archive-Tar
-  - perl-IO-Zlib
-  - perl-Mail-SPF
-  - perl-IO-Socket-INET6
-  - perl-IO-Socket-SSL
-  - perl-Mail-DKIM
-  - perl-DBI
-  - perl-Encode-Detect
-  - perl-HTML-Parser
-  - perl-HTML-Tagset
-  - perl-Time-HiRes
-  - perl-libwww-perl
-  - perl-ExtUtils-Embed

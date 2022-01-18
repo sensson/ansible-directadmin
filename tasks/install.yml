@@ -12,10 +12,6 @@
   stat: path=/usr/local/directadmin/conf/directadmin.conf
   register: directadmin
 
-- name: DirectAdmin | CentOS | Install Packages
-  yum: name="{{ centos_packages }}" update_cache=yes
-  when: "ansible_os_family == 'RedHat'"
-
 - name: DirectAdmin | Setup .preinstall file
   copy:
     content: 1
