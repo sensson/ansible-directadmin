@@ -2,8 +2,7 @@
 - fail: msg=Setting {{ item }} is not defined
   when: item not in hostvars[inventory_hostname]
   with_items:
-  - client_id
-  - license_id
+  - license
 
 - include: install.yml
 - include: configure.yml

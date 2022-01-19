@@ -12,14 +12,14 @@
   stat: path=/usr/local/directadmin/conf/directadmin.conf
   register: directadmin
 
-- name: DirectAdmin | Setup .preinstall file
-  copy:
-    content: 1
-    dest: /root/.preinstall
-    force: no
-    group: root
-    owner: root
-    mode: 644
+- name: DirectAdmin | CentOS | Install Packages
+  yum:
+    name:
+      - wget
+      - tar
+      - perl
+    update_cache: yes
+  when: "ansible_distribution_file_variety == 'RedHat'"
 
 - name: DirectAdmin | Download the Installer
   get_url:
@@ -31,15 +31,13 @@
     path: /root/setup.sh
     mode: 755
 
-- name: DirectAdmin | Include CustomBuild
-  include_tasks: custombuild/main.yml
-
 - name: DirectAdmin | Time for a cup of coffee
   debug:
     msg: Installation is about to begin. Time for a cup of coffee.
   when: directadmin.stat.exists == False
 
 - name: DirectAdmin | Install DirectAdmin
-  command: /root/setup.sh {{ client_id }} {{ license_id }} {{ inventory_hostname }} {{ interface }}
+  command: "/root/setup.sh '{{ license }}'"
+  environment: "{{ setup_environment_variables | combine(directadmin_custombuild_options|default({})) }}"
   register: installer
   when: directadmin.stat.exists == False

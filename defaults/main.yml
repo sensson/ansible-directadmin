@@ -1,7 +1,6 @@
 ---
-client_id: 0
-license_id: 0
-interface: eth0
+license: 0
 
 setup_url: "http://www.directadmin.com/setup.sh"
-custombuild_installer_url: "http://files.directadmin.com/services/custombuild/2.0/custombuild.tar.gz"
+setup_environment_variables:
+  DA_FOREGROUND_CUSTOMBUILD: 'true'

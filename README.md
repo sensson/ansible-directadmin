@@ -15,9 +15,7 @@ We assume you have a valid DirectAdmin license.
 Role Variables
 --------------
 
-* `client_id`: The DirectAdmin client id.
-* `license_id`: The DirectAdmin license id.
-* `interface`: The server's interface. Default: eth0.
+* `license`: The DirectAdmin client id.
 * `directadmin_configuration`: All DirectAdmin configurations
 * `directadmin_custombuild_options`: All CustomBuild options.
 * `directadmin_phpextensions`: All PHP extensions.
@@ -41,7 +39,7 @@ example:
 
 ```yaml
 [directadmin]
-server.fqdn.com client_id=1000 license_id=10000
+server.fqdn.com license=abcdefghijklmnopqrstuvw
 ```
 
 License
