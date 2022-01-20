@@ -47,7 +47,7 @@ server.fqdn.com license=abcdefghijklmnopqrstuvw
 License
 -------
 
-GPLv3
+MIT
 
 Author Information
 ------------------
