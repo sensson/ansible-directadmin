@@ -25,3 +25,6 @@
 
 - name: rebuild php extensions
   shell: /usr/local/directadmin/custombuild/build php_extensions
+
+- name: rewrite confs
+  shell: /usr/local/directadmin/custombuild/build rewrite_confs

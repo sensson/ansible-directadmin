@@ -4,7 +4,16 @@
   with_items:
   - license
 
-- include: install.yml
-- include: configure.yml
-- include: custombuild/phpextensions.yml
-- include: resources/administrators.yml
+- name: Include the installation
+  include: install.yml
+
+- name: Include Directadmin configuration
+  include: configure.yml
+
+
+- name: Include PHP extension configuration
+  include: custombuild/phpextensions.yml
+
+- name: Include Lets Encrypt
+  include: letsencrypt.yml
+  when: directadmin_lets_encrypt_host|default(true)

@@ -19,6 +19,8 @@ Role Variables
 * `directadmin_configuration`: All DirectAdmin configurations
 * `directadmin_custombuild_options`: All CustomBuild options.
 * `directadmin_phpextensions`: All PHP extensions.
+* `directadmin_lets_encrypt_host`: Create a certificate for the host's
+  domain. If set to false it will not be created. Defaults to true.
 
 Dependencies
 ------------

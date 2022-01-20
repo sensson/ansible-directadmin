@@ -1,0 +1,23 @@
+---
+- name: DirectAdmin | Ensure Lets Encrypt is enabled
+  lineinfile:
+    path: /usr/local/directadmin/conf/directadmin.conf
+    regexp: "^letsencrypt="
+    line: "letsencrypt=1"
+  register: configure_lets_encrypt
+  notify:
+   - restart directadmin
+   - rewrite confs
+
+- name: DirectAdmin | Update CustomBuild
+  command: /usr/local/directadmin/custombuild/build update
+  when: configure_lets_encrypt.changed
+
+- name: DirectAdmin | Install Lets Encrypt
+  command: /usr/local/directadmin/custombuild/build letsencrypt
+  when: configure_lets_encrypt.changed
+
+- name: DirectAdmin | Configure Lets Encrypt on hostname
+  command:
+    cmd: /usr/local/directadmin/scripts/letsencrypt.sh request_single {{ ansible_fqdn }} 4096
+    creates: /etc/httpd/conf/ssl.crt/server.crt.creation_time

@@ -1,6 +1,8 @@
 ---
 license: 0
 
+directadmin_lets_encrypt_host: true
+
 setup_url: "http://www.directadmin.com/setup.sh"
 setup_environment_variables:
   DA_FOREGROUND_CUSTOMBUILD: 'true'
