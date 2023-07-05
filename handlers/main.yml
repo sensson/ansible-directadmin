@@ -28,3 +28,6 @@
 
 - name: rewrite confs
   shell: /usr/local/directadmin/custombuild/build rewrite_confs
+
+- name: build modsecurity
+  shell: /usr/local/directadmin/custombuild/build modsecurity

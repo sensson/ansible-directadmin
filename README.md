@@ -1,11 +1,11 @@
 sensson.directadmin
 =========
 
-This module can be used to install DirectAdmin on CentOS-based servers. It
-does not set an admin password so you would have to set this yourself once
-the server is created or retrieve it from /var/log/directadmin/install.log.
+This module can be used to install DirectAdmin. It does not set an admin
+password so you would have to set this yourself once the server is created
+or retrieve it from /usr/local/directadmin/scripts/setup.txt.
 
-It does not manage any configuration settings at the moment.
+It supports Ubuntu 20, CentOS 8 stream, Rocky Linux 8 and AlmaLinux 8.
 
 Requirements
 ------------
@@ -21,6 +21,9 @@ Role Variables
 * `directadmin_phpextensions`: All PHP extensions.
 * `directadmin_lets_encrypt_host`: Create a certificate for the host's
   domain. If set to false it will not be created. Defaults to true.
+* `directadmin_include_modsecurity`: Include ModSecurity playbook.
+* `modsecurity`: Set to `'yes'` to enable.
+* `modsecurity_ruleset`: This is the ruleset from DirectAdmin.
 
 Dependencies
 ------------
@@ -36,8 +39,7 @@ Example Playbook
     - sensson.directadmin
 ```
 
-We recommend using host variables to set your client and license id. For
-example:
+We recommend using host variables to set your license. For example:
 
 ```yaml
 [directadmin]

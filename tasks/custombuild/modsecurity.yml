@@ -1,3 +1,44 @@
-# setup modsecurity
-# enable modsecurity
-# create our custom modsecurity file
+- name: DirectAdmin | ModSecurity | Configure
+  command:
+    cmd: /usr/local/directadmin/custombuild/build set modsecurity {{ modsecurity }}
+  register: cb_modsecurity
+  changed_when: '"Changed" in cb_modsecurity.stdout'
+
+- name: DirectAdmin | ModSecurity | Ruleset
+  command:
+    cmd: /usr/local/directadmin/custombuild/build set modsecurity_ruleset {{ modsecurity_ruleset }}
+  register: cb_modsecurity_ruleset
+  changed_when: '"Changed" in cb_modsecurity_ruleset.stdout'
+  notify: rewrite confs
+
+- name: DirectAdmin | ModSecurity | Create custom configuration directory
+  file:
+    path: /usr/local/directadmin/custombuild/custom/modsecurity/conf
+    state: directory
+
+- name: DirectAdmin | ModSecurity | Add custom WP configuration
+  ansible.builtin.template:
+    src: templates/modsec-wp.conf.j2
+    dest: /usr/local/directadmin/custombuild/custom/modsecurity/conf/wordpress.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: rewrite confs
+
+- name: DirectAdmin | ModSecurity | Build
+  debug:
+    msg: Triggering build modsecurity
+  when:
+    - "'from no to yes' in cb_modsecurity.stdout"
+  changed_when: true
+  notify:
+    - build modsecurity
+    - rewrite confs
+
+- name: DirectAdmin | ModSecurity | Remove
+  debug:
+    msg: Triggering config rewrite
+  when:
+    - "'from yes to no' in cb_modsecurity.stdout"
+  changed_when: true
+  notify: rewrite confs

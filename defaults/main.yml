@@ -5,4 +5,9 @@ directadmin_lets_encrypt_host: true
 
 setup_url: "http://www.directadmin.com/setup.sh"
 setup_environment_variables:
-  DA_FOREGROUND_CUSTOMBUILD: 'true'
+  DA_FOREGROUND_CUSTOMBUILD: true
+  DA_HOSTNAME: "{{ inventory_hostname }}"
+
+directadmin_include_modsecurity: false
+modsecurity: 'no'
+modsecurity_ruleset: 'no'

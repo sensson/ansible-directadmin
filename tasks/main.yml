@@ -10,10 +10,13 @@
 - name: Include Directadmin configuration
   include: configure.yml
 
-
 - name: Include PHP extension configuration
   include: custombuild/phpextensions.yml
 
 - name: Include Lets Encrypt
   include: letsencrypt.yml
   when: directadmin_lets_encrypt_host|default(true)
+
+- name: Incldude ModSecurity
+  include: custombuild/modsecurity.yml
+  when: directadmin_include_modsecurity|default(false)
